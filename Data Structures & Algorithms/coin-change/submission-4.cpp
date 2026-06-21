@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        // dp[i] = min coins needed for i dollars  
+        // most amount of coins is amount ones
+        // so can init each one to amount + 1 
+        vector<int> dp = vector<int>(amount + 1, amount + 1);  
+        dp[0] = 0; 
+
+        for (int i = 1; i <= amount; i++) { 
+            for (int coin : coins) { 
+                if (coin <= i) { 
+                    dp[i] = min(dp[i], dp[i - coin] + 1);  
+                }
+            }
+        }
+
+        if (dp[amount] < amount + 1) { 
+            return dp[amount]; 
+        } else { 
+            return -1; 
+        }
+    }
+};
